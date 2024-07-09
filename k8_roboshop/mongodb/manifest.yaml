@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: dockerjacakl/mongodb:1.0.0
+        image: dockerjackal/mongodb:1.0.0
 
 
 ---
