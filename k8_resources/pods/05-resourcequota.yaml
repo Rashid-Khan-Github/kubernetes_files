@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-quota
+spec:
+  containers:
+  - name: nginx-cont
+    image: nginx:latest
+    imagePullPolicy: Always     # always pulls the updated image from docker hub
+    ports:
+    - containerPort: 80
+    resources:
+      requests:         # Soft Limit
+        cpu: "100m"
+        memory: "128Mi"
+      limits:           # Hard Limit
+        cpu: "200m"
+        memory: "256Mi"
