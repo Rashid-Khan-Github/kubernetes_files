@@ -52,7 +52,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: catalogue-configMap
+  name: catalogue-configmap
   namespace: roboshop
 data:
   MONGO: "true"             # give true in double quotes
