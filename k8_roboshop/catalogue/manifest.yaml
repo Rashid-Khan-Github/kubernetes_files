@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: dockerjacakl/catalogue:1.0.0
+        image: dockerjackal/catalogue:1.0.0
         envFrom:
         - configMapRef:
             name: catalogue-configMap
@@ -41,11 +41,11 @@ spec:
     app: catalogue
     tier: app
     project: roboshop
-ports:
-- name: catalogue-service-port
-  protocol: TCP
-  port: 8080                 # this port no belongs to service
-  targetPort: 8080           # this port belongs to container
+  ports:
+  - name: catalogue-service-port
+    protocol: TCP
+    port: 8080                 # this port no belongs to service
+    targetPort: 8080           # this port belongs to container
 
 
 ---
