@@ -27,7 +27,7 @@ spec:
         image: dockerjackal/catalogue:1.0.0
         envFrom:
         - configMapRef:
-            name: catalogue-configMap
+            name: catalogue-configmap
 
 
 ---
