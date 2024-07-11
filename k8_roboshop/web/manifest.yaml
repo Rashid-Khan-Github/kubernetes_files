@@ -143,6 +143,7 @@ metadata:
   name: web-service
   namespace: roboshop
 spec:
+  type: LoadBalancer
   selector:
     app: web
     tier: web
