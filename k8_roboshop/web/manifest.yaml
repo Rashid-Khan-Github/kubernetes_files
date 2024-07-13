@@ -133,11 +133,12 @@ spec:
       containers:
       - name: web
         image: dockerjackal/web:1.0.0
+        imagePullPolicy: Always
         volumeMounts:
-            - name: nginx-conf-vol              # name of the volume
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
+        - name: nginx-conf-vol              # name of the volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
 
 
 ---
