@@ -4,7 +4,9 @@ metadata:
   name: user
   namespace: roboshop
 data:
-  MONGO: "true"
+  MONGO: "true"       # keep true in double quotes
+  MONGO_URL: "mongodb://mongodb:27017/user"
+  REDIS_HOST: "redis"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,7 +33,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: joindevops/user:v1
+        image: dockerjackal/user:v1
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
