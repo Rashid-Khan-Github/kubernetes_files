@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-deployment
+  name: mongodb_deployment
   namespace: roboshop
   labels: # these labels are deployment labels
     app: mongodb
@@ -29,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: mongodb_service
   namespace: roboshop
 spec:
   selector:
