@@ -1,35 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue-configmap
+  namespace: roboshop
+data:
+  MONGO: "true"
+  MONGO_URL: mongodb://mongodb:27017/catalogue
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalogue-deployment
   namespace: roboshop
-  labels:           # these lables are deployment labels                 
+  labels: # these labels are deployment labels
     app: catalogue
-    tier: app
     project: roboshop
-
+    tier: app
 spec:
   replicas: 1
   selector:
-    matchLabels:    # these labels should match with pod labels
+    matchLabels: # these labels are used to find the pods
       app: catalogue
-      tier: app
       project: roboshop
-  template:         # this is a pod definition
+      tier: app
+  template:
     metadata:
-      labels:
-       app: catalogue
-       tier: app
-       project: roboshop
+      labels: # these labels are pod labels
+        app: catalogue
+        project: roboshop
+        tier: app
     spec:
       containers:
       - name: catalogue
-        image: dockerjackal/catalogue:1.0.0
+        image: dockerjackal/catalogue:v1
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: catalogue-configmap
-
-
 ---
 apiVersion: v1
 kind: Service
@@ -39,22 +46,9 @@ metadata:
 spec:
   selector:
     app: catalogue
-    tier: app
     project: roboshop
+    tier: app
   ports:
-  - name: catalogue-service-port
-    protocol: TCP
-    port: 8080                 # this port no belongs to service
-    targetPort: 8080           # this port belongs to container
-
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: catalogue-configmap
-  namespace: roboshop
-data:
-  MONGO: "true"             # give true in double quotes
-  MONGO_URL: "mongodb://mongodb-service:27017/catalogue"    #protocol://service-name:service-port/schema
-
+  - protocol: TCP
+    port: 8080 #service-port
+    targetPort: 8080 #container-port

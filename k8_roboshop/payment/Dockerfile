@@ -1,13 +1,12 @@
-FROM python:3.9-alpine
+FROM python:3.9.18-alpine3.19
+
 EXPOSE 8080
 USER root
 WORKDIR /app
 COPY requirements.txt /app/
-RUN apk --no-cache add build-base linux-headers
-RUN pip install --upgrade setuptools
+RUN apk add python3-dev build-base linux-headers pcre-dev
 RUN pip install -r requirements.txt
 COPY *.py /app/
 COPY payment.ini /app/
-ENV AMQP_USER=roboshop \
-    AMQP_PASS=roboshop123
-CMD [ "uwsgi", "--ini", "payment.ini" ]
+#CMD ["python", "payment.py"]
+CMD ["uwsgi", "--ini", "payment.ini"]
