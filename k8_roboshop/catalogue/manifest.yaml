@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: catalogue_configmap
+  name: catalogue
   namespace: roboshop
 data:
   MONGO: "true"
@@ -10,7 +10,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalogue_deployment
+  name: catalogue
   namespace: roboshop
   labels: # these labels are deployment labels
     app: catalogue
@@ -36,12 +36,12 @@ spec:
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
-            name: catalogue_configmap
+            name: catalogue
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalogue_service
+  name: catalogue
   namespace: roboshop
 spec:
   selector:
