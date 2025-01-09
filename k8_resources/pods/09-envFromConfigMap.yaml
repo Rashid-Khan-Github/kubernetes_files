@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-Pod
+spec:
+  containers:
+  - name: configMap-demo
+    image: nginx
+    envFrom:
+    - configMapRef:               # getting all key-value pairs at once from secret
+        name: course-config
+
+
+
+

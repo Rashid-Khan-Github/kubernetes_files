@@ -1,0 +1,18 @@
+# A simple example of ClusterConfig object:
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: roboshop-eks-cluster
+  region: us-east-1
+
+managedNodeGroups:                # Completely Managed by AWS
+  - name: eks-spot-node
+    instanceType: t2.micro
+    availabilityZones:
+    - us-east-1a
+    desiredCapacity: 3
+    spot: true                    # Your nodes can be takes back at any point of time
+    ssh:
+      publicKeyName: eks-keypair  # Your Key pair in AWS

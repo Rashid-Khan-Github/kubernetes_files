@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet               # Guarantees one pod in every worker node
+metadata:
+  name: fluentd
+  namespace: kube-system      # Kubernetes Admin NameSpace
+  labels:
+    k8s-app: fluentd-logging
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluentd-logging
+      version: v1
+  template:
+    metadata:
+      labels:
+        k8s-app: fluentd-logging
+        version: v1
+    spec:
+      containers:
+      - name: fluentd
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:          # gives access to host storage location (/var/log) from pods
+          path: /var/log
+     
