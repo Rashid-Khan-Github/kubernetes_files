@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongodb-set
+  name: redis-set
   labels:
-    app: mongodb
+    app: redis
     tier: db
     project: roboshop
 spec:
   selector:
     matchLabels:
-      app: mongodb
+      app: redis
       tier: db
       project: roboshop     # has to match .spec.template.metadata.labels
 
-  serviceName: "mongodb"
+  serviceName: "redis"
   replicas: 1               # by default is 1
   template:
     metadata:
       labels:
-        app: mongodb
+        app: redis
         tier: db
         project: roboshop   # has to match .spec.selector.matchLabels
     spec:
       containers:
-      - name: mongodb
-        image: dockerjackal/mongodb:v1
+      - name: redis
+        image: redis
         volumeMounts:
-        - name: mongodb-pvc
-          mountPath: /data/db
+        - name: redis-pvc
+          mountPath: /data
   volumeClaimTemplates:
   - metadata:
-      name: mongodb-pvc
+      name: redis-pvc
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "ebs-sc"
@@ -42,15 +42,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service 
+  name: redis-service 
 spec:
   clusterIP: None       # headless service
   selector:
-    app: mongodb
+    app: redis
     tier: db
     project: roboshop
   ports:
-  - name: mongodb-service-port
+  - name: redis-service-port
     protocol: TCP
-    port: 27017           # this port no belongs to service
-    targetPort: 27017     # this port belongs to container
+    port: 6379            # this port no belongs to service
+    targetPort: 6379      # this port belongs to container
