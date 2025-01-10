@@ -1,36 +1,39 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongodb-set
+  name: mysql-set
   labels:
-    app: mongodb
+    app: mysql
     tier: db
     project: roboshop
 spec:
   selector:
     matchLabels:
-      app: mongodb
+      app: mysql
       tier: db
       project: roboshop     # has to match .spec.template.metadata.labels
 
-  serviceName: "mongodb-service"
+  serviceName: "mysql-service"
   replicas: 1               # by default is 1
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mysql
         tier: db
         project: roboshop   # has to match .spec.selector.matchLabels
     spec:
       containers:
-      - name: mongodb
-        image: dockerjackal/mongodb:v1
+      - name: mysql
+        image: mysql
+        envFrom:
+        - configMapRef:
+            name: mysql-configmap
         volumeMounts:
-        - name: mongodb-pvc
-          mountPath: /data/db
+        - name: mysql-pvc
+          mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: mongodb-pvc
+      name: mysql-pvc
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "ebs-sc"
@@ -42,15 +45,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: mysql-service
 spec:
   clusterIP: None       # headless service
   selector:
-    app: mongodb
+    app: mysql
     tier: db
     project: roboshop
   ports:
-  - name: mongodb-service-port
+  - name: mysql-service-port
     protocol: TCP
-    port: 27017           # this port no belongs to service
-    targetPort: 27017     # this port belongs to container
+    port: 3306            # this port no belongs to service
+    targetPort: 3306      # this port belongs to container
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+  namespace: roboshop
+data:
+  MYSQL_DATABASE: "cities"
