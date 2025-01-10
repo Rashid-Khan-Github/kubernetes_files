@@ -5,7 +5,7 @@ metadata:
   labels:           # these lables are deployment labels                 
     app: nginx
 spec:
-  replicas: "{{ .Values.deployment.replicaCount }}"
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:    # these labels should match with pod labels
       app: nginx

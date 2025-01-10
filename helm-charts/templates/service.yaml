@@ -12,5 +12,5 @@ spec:
   ports:
   - name: nginx-service-port
     protocol: TCP
-    port: "{{ .Values.service.port }}"    # this port no belongs to service
+    port: {{ .Values.service.port }}    # this port no belongs to service
     targetPort: http-web-svc              # this port belongs to container
