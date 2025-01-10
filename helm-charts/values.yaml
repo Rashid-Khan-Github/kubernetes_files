@@ -1,0 +1,5 @@
+deployment:
+  imageVersion: stable-perl
+  replicaCount : 3
+service:
+  port: 80
