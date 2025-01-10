@@ -1,5 +1,5 @@
 deployment:
-  imageVersion: latest
-  replicaCount : 3
+  imageVersion: stable-alpine-perl
+  replicaCount : 5
 service:
   port: 80
