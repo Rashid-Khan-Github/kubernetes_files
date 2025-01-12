@@ -17,8 +17,8 @@ rules:
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-# This role binding allows "jane" to read pods in the "default" namespace.
-# You need to already have a Role named "pod-reader" in that namespace.
+# This role binding allows "Mishima" to administer pods in the "roboshop" namespace.
+# You need to already have a Role named "roboshop-admin" in that namespace.
 kind: RoleBinding
 metadata:
   name: read-pods-binding
