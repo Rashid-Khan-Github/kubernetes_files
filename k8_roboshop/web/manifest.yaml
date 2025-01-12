@@ -1,3 +1,4 @@
+#=====================================================================================
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -107,8 +108,9 @@ data:
 
     }
 
-    } 
+    }
 
+#=====================================================================================
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -136,6 +138,13 @@ spec:
       containers:
       - name: web
         image: dockerjackal/web:v1
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "68Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"       
         imagePullPolicy: Always
         volumeMounts:
         - name: nginx-conf-vol
@@ -149,6 +158,29 @@ spec:
           items:
             - key: nginx.conf
               path: nginx.conf
+
+#=====================================================================================
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-hautoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+
+#=====================================================================================
 ---
 apiVersion: v1
 kind: Service
@@ -165,3 +197,5 @@ spec:
   - protocol: TCP
     port: 80 #service-port
     targetPort: 80 #container-port
+
+#=====================================================================================
