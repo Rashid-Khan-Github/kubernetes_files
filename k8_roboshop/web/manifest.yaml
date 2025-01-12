@@ -165,6 +165,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: web-hautoscaler
+  namespace: roboshop
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
