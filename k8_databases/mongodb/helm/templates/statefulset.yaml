@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb-set
+  labels:
+    app: mongodb
+    tier: db
+    project: roboshop
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+      tier: db
+      project: roboshop     # has to match .spec.template.metadata.labels
+
+  serviceName: "mongodb-service"
+  replicas: 1               # by default is 1
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        tier: db
+        project: roboshop   # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: mongodb
+        image: "dockerjackal/mongodb:{{ .Values.statefulset.imageVersion }}"
+        volumeMounts:
+        - name: mongodb-pvc
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 5Gi
