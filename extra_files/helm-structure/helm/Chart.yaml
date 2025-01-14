@@ -1,7 +1,7 @@
 # metadata of our application
 apiVersion: v2
 version: 0.0.1        # This is the chart version
-name: mongodb
-description: This is the helm chart of mongodb
+name: nginx
+description: This is the helm chart of nginx
 appVersion: "1.0.0"   # This is the application version
 
