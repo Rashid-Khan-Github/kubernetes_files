@@ -15,4 +15,4 @@ managedNodeGroups:                # Completely Managed by AWS
     desiredCapacity: 3
     spot: true                    # Your nodes can be takes back at any point of time
     ssh:
-      publicKeyName: eks-keypair  # Your Key pair in AWS
+      publicKeyName: VirginiaKey  # Your Key pair in AWS
