@@ -4,7 +4,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: ecommerce-app-eks
+  name: ecommerce
   region: us-east-1
 
 managedNodeGroups:                # Completely Managed by AWS
