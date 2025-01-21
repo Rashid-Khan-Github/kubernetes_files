@@ -11,7 +11,7 @@ managedNodeGroups:                # Completely Managed by AWS
   - name: eks-spot-node
     instanceType: t2.micro
     availabilityZones:
-    - us-east-1a
+    - us-east-1b
     desiredCapacity: 3
     spot: true                    # Your nodes can be takes back at any point of time
     ssh:
